@@ -11,6 +11,7 @@ App is built using openly available [API](https://github.com/HackerNews/API)
 ## Things I Wish I Could Do
 
 `Login` - api dosn't have login endpoints so  this app is limited to read only.
+
 `Pagination` - sadly api is not optimized for these kind of pages (sry for loading time).
 
 
