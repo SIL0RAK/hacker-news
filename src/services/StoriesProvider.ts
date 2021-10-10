@@ -18,17 +18,20 @@ class StoriesProvider {
     public page: number;
     private stories: Array<IStory>;
 
-    constructor(pageSize) {
+    constructor(pageSize?: number) {
         this.pageSize = pageSize || 50;
     }
 
-    async fetchIds () {
+    public async fetchTopStories (): Promise<Array<string>> {
         const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-        this.ids = await response.json();
+        return await response.json();
     }
 
-    fetchArticles () {
-        
+    public fetchArticles (storiesIds: Array<string>): Promise<Array<IStory>> {
+        return Promise.all(storiesIds.map( async (id: string) => {
+            const storyResponse = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+            return storyResponse.json();
+        }));
     }
 
     setPageSize (size: number) {
