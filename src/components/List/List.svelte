@@ -1,7 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import getTopStories from '../../services/getTopStories';
-import ListItem from './ListItem.svelte';
+    import Loader from '../Loader/Loader.svelte';
+    import ListItem from './ListItem.svelte';
     
     let isLoading = true;
     let errorMessage = null;
@@ -13,7 +14,6 @@ import ListItem from './ListItem.svelte';
 
         try {
             items = await getTopStories();
-            console.log('items', items);
         } catch (error) {
             errorMessage = error.message;
             console.log(error);
@@ -25,12 +25,10 @@ import ListItem from './ListItem.svelte';
 
 <div class="list">
     {#if isLoading}
-        <div>
-            Loading
-        </div>
+        <Loader />
     {:else if errorMessage}
         <div>
-            whoops: {errorMessage}
+            Whoops: {errorMessage}
         </div>
     {:else}
         <ul>

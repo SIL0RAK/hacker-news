@@ -1,8 +1,6 @@
 <script>
     export let item;
-
 </script>
-
 
 <li class="list-item">
     <div class="score">
