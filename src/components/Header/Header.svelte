@@ -11,11 +11,10 @@
 
     const links: Array<ILink> = [
         { active: false, path: Routes.New, name: 'New' },
-        { active: false, path: Routes.Past, name: 'Past' },
-        { active: false, path: Routes.Comments, name: 'Comments' },
+        { active: false, path: Routes.Top, name: 'Top' },
         { active: false, path: Routes.Ask, name: 'Ask' },
         { active: false, path: Routes.Show, name: 'Show' },
-        { active: false, path: Routes.Submit, name: 'Submit' },
+        { active: false, path: Routes.Best, name: 'Best' },
     ].map((link) => ({
         ...link,
         active: link.path === currentPathname

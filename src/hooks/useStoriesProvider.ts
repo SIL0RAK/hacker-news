@@ -13,7 +13,7 @@ interface IStory {
     url: string,
 }
 
-const useStoriesProvider = () => { 
+const useStoriesProvider = (apiPath: string) => { 
     let isLoading = writable(true);
     let errorMessage = writable(null);
     let items = writable([] as Array<any>);
@@ -22,7 +22,7 @@ const useStoriesProvider = () => {
     let pageSize = 25;
     
     const fetchTopStories = async () => {
-        const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
+        const response = await fetch(`https://hacker-news.firebaseio.com${apiPath}.json`, );
         ids = await response.json();
     }
 
@@ -34,13 +34,18 @@ const useStoriesProvider = () => {
     }
 
     const next = async () => {
-        page ++;
+        try {
+            page ++;
 
-        const start = page * pageSize;
-        const pageIds = ids.slice(start, start + pageSize)
-        const stories = await fetchArticles(pageIds);
+            const start = page * pageSize;
+            const pageIds = ids.slice(start, start + pageSize)
+            const stories = await fetchArticles(pageIds);
 
-        items.update(i => ([...i, ...stories]));
+            items.update(i => ([...i, ...stories]));
+        } catch (error) {
+            errorMessage.update(() => error.message);
+            isLoading.update(() => false);
+        }
     }
 
     onMount(async () => {
@@ -51,7 +56,7 @@ const useStoriesProvider = () => {
             await fetchTopStories();
             await next();
         } catch (error) {
-            errorMessage = error.message;
+            errorMessage.update(() => error.message);
         }
 
         isLoading.update(() => false);

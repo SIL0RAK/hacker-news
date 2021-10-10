@@ -1,4 +1,6 @@
-<div class="error"></div>
+<div class="error">
+    <slot></slot>
+</div>
 
 <style>
     .error {

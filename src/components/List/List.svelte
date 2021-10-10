@@ -2,9 +2,16 @@
     import Loader from '../Loader/Loader.svelte';
     import ListItem from './ListItem.svelte';
     import Center from "../Center.svelte";
+    import Error from '../Error/Error.svelte'
     import useStoriesProvider from '../../hooks/useStoriesProvider';
+    import { API, Routes } from '../../constants';
     
-    const { isLoading, items, errorMessage, next } = useStoriesProvider()
+    const {
+        next,
+        items,
+        isLoading,
+        errorMessage,
+    } = useStoriesProvider(API[window.location.pathname] || API[Routes.New] )
 </script>
 
 <div class="list">
@@ -14,7 +21,7 @@
         </Center>
     {:else if $errorMessage}
         <Center>
-            Whoops: {errorMessage}
+            <Error>Whoops: {$errorMessage}</Error>
         </Center>
     {:else}
         <ul>
@@ -22,12 +29,12 @@
                 <ListItem item={item} />
             {/each}
         </ul>
+        <center>
+            <button on:click={next}>
+                More
+            </button>
+        </center>
     {/if}
-    <div>
-        <button on:click={next}>
-            More
-        </button>
-    </div>
 </div>
 
 <style>

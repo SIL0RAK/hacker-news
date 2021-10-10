@@ -10,10 +10,12 @@
     <div class="content">
         <div class="info">
             posted by {item.by}
+            <!-- requires login
             <div class="actions">
                 <div>❌ hide</div>
                 <div>💭 comment</div>
-            </div>
+            </div> 
+            -->
         </div>
         <a class="title" href={item.url}>
             {item.title}
@@ -36,14 +38,14 @@
         padding-bottom: 2px;
     }
 
-    .actions {
+    /* .actions {
         display: flex;
     }
 
     .actions div {
         padding-left: 5px;
         cursor: pointer;
-    }
+    } */
 
     .score {
         display: flex;
