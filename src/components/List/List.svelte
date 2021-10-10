@@ -1,51 +1,42 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import getTopStories from '../../services/getTopStories';
-    import StoriesProvider from '../../services/StoriesProvider';
     import Loader from '../Loader/Loader.svelte';
     import ListItem from './ListItem.svelte';
+    import Center from "../Center.svelte";
+    import useStoriesProvider from '../../hooks/useStoriesProvider';
     
-    let isLoading = true;
-    let errorMessage = null;
-    let items: Array<any> = [];
-    const storyProvider = new StoriesProvider();
-
-    onMount(async () => {
-        isLoading = true;
-        errorMessage = null;
-
-        try {
-            const ids = await storyProvider.fetchTopStories();
-            
-            items = await storyProvider.fetchArticles(ids.slice(0, storyProvider.page));
-        } catch (error) {
-            errorMessage = error.message;
-            console.log(error);
-        }
-        
-        isLoading = false;
-    })
+    const { isLoading, items, errorMessage, next } = useStoriesProvider()
 </script>
 
 <div class="list">
-    {#if isLoading}
-        <Loader />
-    {:else if errorMessage}
-        <div>
+    {#if $isLoading}
+        <Center>
+            <Loader />
+        </Center>
+    {:else if $errorMessage}
+        <Center>
             Whoops: {errorMessage}
-        </div>
+        </Center>
     {:else}
         <ul>
-            {#each items as item, index}
+            {#each $items as item, index}
                 <ListItem item={item} />
             {/each}
         </ul>
     {/if}
+    <div>
+        <button on:click={next}>
+            More
+        </button>
+    </div>
 </div>
 
 <style>
     ul {
         padding-left: 25px;
+    }
+
+    .list {
+        height: 95%;
     }
 </style>
 

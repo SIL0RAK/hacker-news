@@ -17,15 +17,15 @@
 </div>
 
 <style>
-
 	.app {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
+		justify-content: center;
+		min-height: 100%;
 	}
 
 	.content {
 		width: 1200px;
+		min-height: 100%;
 		background-color: #f6f6f3;
 	}
 </style>

@@ -2,12 +2,13 @@
 
 <style>
     .loader {
-        border: 16px solid #f3f3f3;
+        border: 12px solid #f3f3f3;
         border-radius: 50%;
-        border-top: 16px solid #ff8e42;
-        width: 120px;
-        height: 120px;
+        border-top: 12px solid #ff8e42;
+        width: 60px;
+        height: 60px;
         animation: spin 2s linear infinite;
+        cursor: none;
     }
 
     @keyframes spin {
